@@ -19,8 +19,18 @@ router.get('/', async (req,res)=> {
     }
 })
 
-//POST /users/register -- CREATE a new user
+router.put('/:id', async(req,res)=> {
+    try {
+        const updateUser = await db.Users.findByIdAndUpdate(req.params.id,req.body,{new: false})
+        res.json(updateUser)
+    } catch (error) {
+        console.log(err)
+        res.send(503).json({msg: 'Server error : 503'})
+        
+    }
+})
 
+//POST /users/register -- CREATE a new user
 router.post('/register', async (req, res) => {
     try {
         // check if the user exists, dont allow to sign up again
