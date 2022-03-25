@@ -25,7 +25,6 @@ app.get('/', myMiddleWare, (req,res)=>{
 app.use('/api-v1/users', myMiddleWare, require('./controllers/api-v1/users'))
 app.use('/api-v1/inventory', require('./controllers/api-v1/inventory'))
 
-
 app.listen(PORT, () => {
     console.log(`KAT Server running on port : ${PORT}`)
 })

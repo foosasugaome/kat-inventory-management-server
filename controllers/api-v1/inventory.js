@@ -6,7 +6,15 @@ const router = express.Router()
 const db = require('../../models')
 // const requiresToken = require('../requiresToken')
 
-router.get('/inventory', async (req, res) => {
-    
+router.get('/', async (req, res) => {
+    try {
+        
+    } catch (error) {
+        console.log(err)
+        
+    }
+
 })
+
+
 module.exports = router
