@@ -11,7 +11,7 @@ app.use(cors())
 
 
 const myMiddleWare = (req, res, next) => {
-    console.log(` ${req.url} : ${req.body.email} logged in.`)        
+    console.log(`Request made  at : ${req.url}`)        
     next()
 }
 
@@ -22,7 +22,8 @@ app.get('/', myMiddleWare, (req,res)=>{
 })
 
 // controller
-app.use('/api-v1/users', require('./controllers/api-v1/users'))
+app.use('/api-v1/users', myMiddleWare, require('./controllers/api-v1/users'))
+app.use('/api-v1/inventory', require('./controllers/api-v1/inventory'))
 
 
 app.listen(PORT, () => {

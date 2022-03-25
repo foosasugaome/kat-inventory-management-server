@@ -6,6 +6,19 @@ const bcrypt = require('bcrypt')
 const db = require('../../models')
 const requiresToken = require('../requiresToken')
 
+
+// GET users 
+
+router.get('/', async (req,res)=> {
+    try {
+        const foundUser = await db.Users.find({})
+        res.json(foundUser)
+    } catch (error) {
+        console.log(err)
+        res.status(503).json({ msg : `Server occured.`})
+    }
+})
+
 //POST /users/register -- CREATE a new user
 
 router.post('/register', async (req, res) => {
