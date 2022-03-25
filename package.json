@@ -1,0 +1,30 @@
+{
+  "name": "kat-inventory-management-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foosasugaome/kat-inventory-management-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foosasugaome/kat-inventory-management-server/issues"
+  },
+  "homepage": "https://github.com/foosasugaome/kat-inventory-management-server#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.29.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.8",
+    "multer": "^1.4.4"
+  }
+}
