@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const transactionsSchema = new mongoose.Schema({
     transType : String,
-    transCount : int,    
+    transCount : Number,    
     transNotes : String,
     transOwner : String,
     transUpdatedBy : String
@@ -22,8 +22,8 @@ const inventorySchema = new mongoose.Schema({
     route: String,
     usedFor: String,
     substanceName: String,
-    unitCount : int,
+    unitCount : Number,
     transactions: [transactionsSchema]
 },{timestamps:true})
 
-module.exports = mongoose.model('Transactions', transactionsSchema)
+module.exports = mongoose.model('Inventory', inventorySchema)

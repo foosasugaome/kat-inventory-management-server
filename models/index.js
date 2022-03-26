@@ -16,3 +16,4 @@ db.on('error', (err)=> {
 })
 
 module.exports.Users = require('./users')
+module.exports.Inventory = require('./inventory')

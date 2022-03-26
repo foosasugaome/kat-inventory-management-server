@@ -17,13 +17,16 @@ const myMiddleWare = (req, res, next) => {
 
 app.use(myMiddleWare)
 
-app.get('/', myMiddleWare, (req,res)=>{
+app.get('/', (req,res)=>{
     res.json({msg : `KAT Software Solutions`})
 })
 
 // controller
-app.use('/api-v1/users', myMiddleWare, require('./controllers/api-v1/users'))
+app.use('/api-v1/users', require('./controllers/api-v1/users'))
 app.use('/api-v1/inventory', require('./controllers/api-v1/inventory'))
+
+
+
 
 app.listen(PORT, () => {
     console.log(`KAT Server running on port : ${PORT}`)
