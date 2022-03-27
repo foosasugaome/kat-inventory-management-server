@@ -21,7 +21,7 @@ router.get('/', async (req,res)=> {
 
 router.put('/:id', async(req,res)=> {
     try {
-        const updateUser = await db.Users.findByIdAndUpdate(req.params.id,req.body,{new: false})
+        const updateUser = await db.Users.findByIdAndUpdate(req.params.id,req.body,{new: true})
         res.json(updateUser)
     } catch (error) {
         console.log(err)
@@ -49,7 +49,8 @@ router.post('/register', async (req, res) => {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             email: req.body.email,
-            password: hashedPassword
+            password: hashedPassword,
+            manager: req.body.manager
         })
 
         // create a jwt payload to send back to the client
