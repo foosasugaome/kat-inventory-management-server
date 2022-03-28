@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/katims'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/katims'
 
 mongoose.connect(MONGODB_URI)
 
