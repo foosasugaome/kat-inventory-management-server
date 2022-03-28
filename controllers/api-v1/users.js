@@ -14,17 +14,20 @@ router.get('/', async (req,res)=> {
         const foundUser = await db.Users.find({})
         res.json(foundUser)
     } catch (error) {
-        console.log(error)
+        console.log(err)
         res.status(503).json({ msg : `Server occured.`})
     }
 })
 
 router.put('/:id', async(req,res)=> {
     try {
+        console.log(req.body)
         const updateUser = await db.Users.findByIdAndUpdate(req.params.id,req.body,{new: true})
-        res.json(updateUser)
+        const users = await db.Users.find({})
+        // res.json(updateUser)
+        res.json(users)
     } catch (error) {
-        console.log(error)
+        console.log(err)
         res.send(503).json({msg: 'Server error : 503'})
         
     }
@@ -65,8 +68,8 @@ router.post('/register', async (req, res) => {
         res.json({ token })
         
 
-    } catch(error) {
-        console.log(error)
+    } catch(err) {
+        console.log(err)
         res.status(503).json({msg: 'server error 503'})
     }
 })
@@ -77,8 +80,8 @@ router.post('/login', async (req,res)=> {
         const foundUser = await db.Users.findOne({
             username: req.body.username
         })
-        console.log(foundUser)
-        if(!foundUser) return res.status(409).json({ msg: `User ${req.body.username} not found. `})
+
+        if(!foundUser) return res.status(409).json({ msg: `User not found.`})
         
         if(!bcrypt.compareSync(req.body.password, foundUser.password)) {
               return res.status(406).json({ msg: 'Invalid login credentials.' })
@@ -86,15 +89,14 @@ router.post('/login', async (req,res)=> {
             const payload = {
                 username: foundUser.username,
                 email: foundUser.email,
-                id: foundUser.id,
-                manager: foundUser.manager
+                id: foundUser.id
             }
             const token = await jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: 60 * 60})
             res.json({ token })
         }        
-    } catch (error){        
-        console.log(error)
-        res.status(503).json({ msg: error })
+    } catch (err){        
+        console.log(err)
+        res.status(503).json({ msg: err })
     }    
 })
 
