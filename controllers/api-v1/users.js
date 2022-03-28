@@ -14,7 +14,7 @@ router.get('/', async (req,res)=> {
         const foundUser = await db.Users.find({})
         res.json(foundUser)
     } catch (error) {
-        console.log(err)
+        console.log(error)
         res.status(503).json({ msg : `Server occured.`})
     }
 })
@@ -24,7 +24,7 @@ router.put('/:id', async(req,res)=> {
         const updateUser = await db.Users.findByIdAndUpdate(req.params.id,req.body,{new: true})
         res.json(updateUser)
     } catch (error) {
-        console.log(err)
+        console.log(error)
         res.send(503).json({msg: 'Server error : 503'})
         
     }
@@ -65,8 +65,8 @@ router.post('/register', async (req, res) => {
         res.json({ token })
         
 
-    } catch(err) {
-        console.log(err)
+    } catch(error) {
+        console.log(error)
         res.status(503).json({msg: 'server error 503'})
     }
 })
@@ -92,9 +92,9 @@ router.post('/login', async (req,res)=> {
             const token = await jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: 60 * 60})
             res.json({ token })
         }        
-    } catch (err){        
-        console.log(err)
-        res.status(503).json({ msg: err })
+    } catch (error){        
+        console.log(error)
+        res.status(503).json({ msg: error })
     }    
 })
 
