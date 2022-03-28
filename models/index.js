@@ -8,7 +8,7 @@ const db = mongoose.connection
 
 
 db.once('open', () => {
-    console.log(`Connected to mongodb at ${db.host}:${db.port}`)
+    console.log(`Connected to ${MONGODB_URI} at ${db.host}:${db.port}`)
 })
 
 db.on('error', (err)=> {

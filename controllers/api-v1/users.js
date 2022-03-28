@@ -77,8 +77,8 @@ router.post('/login', async (req,res)=> {
         const foundUser = await db.Users.findOne({
             username: req.body.username
         })
-
-        if(!foundUser) return res.status(409).json({ msg: `User not found.`})
+        console.log(foundUser)
+        if(!foundUser) return res.status(409).json({ msg: `User ${req.body.username} not found. `})
         
         if(!bcrypt.compareSync(req.body.password, foundUser.password)) {
               return res.status(406).json({ msg: 'Invalid login credentials.' })
