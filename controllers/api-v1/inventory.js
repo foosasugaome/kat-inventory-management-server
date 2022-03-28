@@ -72,4 +72,29 @@ router.put('/:id', async(req,res)=> {
     }
 })
 
+// get transactions --use this to count total count of inventory/or to display transactions (Norman)
+router.get('/:id/transaction', async(req,res)=> {
+  try {
+    const foundTransactions = await db.Inventory.findById(req.params.id)
+    res.json(foundTransactions.transactions)
+  } catch (error) {
+    console.log(error)
+    res.status(503).json({msg: `An error occured.`})
+  }
+})
+
+// add to transactions (Norman)
+router.put('/:id/transaction', async(req,res)=> {
+  try {    
+    const newTransaction = await db.Inventory.findById(req.params.id)
+    newTransaction.transactions.push(req.body)
+    await newTransaction.save()
+    res.json(newTransaction)
+  } catch (error) {
+    console.log(error)
+    res.status(503).json({msg: `An error occured.`})
+  }
+})
+
+
 module.exports = router
