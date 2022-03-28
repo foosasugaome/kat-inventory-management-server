@@ -16,6 +16,15 @@ router.get('/', async (req,res)=>{
         console.log(error)
     }
 } )
+//route to get one specific medicine (justin)
+router.get('/:id', async (req,res)=>{
+    try {
+        const foundMedicine = await db.Inventory.findById(req.params.id)
+        res.json(foundMedicine)
+    } catch (error) {
+        console.log(error)
+    }
+} )
 
 
 // Search inventory
