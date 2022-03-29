@@ -89,8 +89,13 @@ router.get('/:id/transaction', async(req,res)=> {
 router.put('/:id/transaction', async(req,res)=> {
   try {    
     const newTransaction = await db.Inventory.findById(req.params.id)
+    if(req.body.transType === 'rem') {
+      req.body.transCount *= -1 
+    }
+    newTransaction.unitCount += parseInt(req.body.transCount)    
     newTransaction.transactions.push(req.body)
     await newTransaction.save()
+    console.log(newTransaction.unitCount)
     res.json(newTransaction)
   } catch (error) {
     console.log(error)
