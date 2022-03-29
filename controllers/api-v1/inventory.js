@@ -94,8 +94,7 @@ router.put('/:id/transaction', async(req,res)=> {
     }
     newTransaction.unitCount += parseInt(req.body.transCount)    
     newTransaction.transactions.push(req.body)
-    await newTransaction.save()
-    console.log(newTransaction.unitCount)
+    await newTransaction.save()    
     res.json(newTransaction)
   } catch (error) {
     console.log(error)
