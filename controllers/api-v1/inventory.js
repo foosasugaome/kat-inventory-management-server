@@ -10,6 +10,7 @@ const { route } = require('./users')
 // List all inventory
 router.get('/', async (req,res)=>{
     try {
+      
         const listInventory = await db.Inventory.find({})
         res.json(listInventory)
     } catch (error) {
@@ -31,7 +32,7 @@ router.get('/:id', async (req,res)=>{
 router.post('/search', async (req, res) => {
   try {
     const foundInventory = await db.Inventory.find({
-      genericName: req.body.genericName
+      genericName: {$regex: req.body.genericName, $options: 'i'}
     })
 
     res.json(foundInventory)
