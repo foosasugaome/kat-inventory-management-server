@@ -28,13 +28,14 @@ router.get('/:id', async (req,res)=>{
 } )
 
 
-// Search inventory
+// Search inventory 
 router.post('/search', async (req, res) => {
   try {
-    const foundInventory = await db.Inventory.find({
-      genericName: {$regex: req.body.genericName, $options: 'i'}
-    })
-
+    const foundInventory = await db.Inventory.find({ $or: [
+        {genericName: {$regex: req.body.genericName, $options: 'i'}}
+      , {brandName: {$regex: req.body.genericName, $options: 'i'}}      
+    ]
+    })    
     res.json(foundInventory)
   } catch (error) {
     console.log(error)
