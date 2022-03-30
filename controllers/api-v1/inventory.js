@@ -10,7 +10,6 @@ const { route } = require('./users')
 // List all inventory
 router.get('/', async (req,res)=>{
     try {
-      
         const listInventory = await db.Inventory.find({})
         res.json(listInventory)
     } catch (error) {
@@ -28,14 +27,15 @@ router.get('/:id', async (req,res)=>{
 } )
 
 
-// Search inventory 
+
+
+// Search inventory
 router.post('/search', async (req, res) => {
   try {
-    const foundInventory = await db.Inventory.find({ $or: [
-        {genericName: {$regex: req.body.genericName, $options: 'i'}}
-      , {brandName: {$regex: req.body.genericName, $options: 'i'}}      
-    ]
-    })    
+    const foundInventory = await db.Inventory.find({
+      genericName: req.body.genericName
+    })
+
     res.json(foundInventory)
   } catch (error) {
     console.log(error)
@@ -45,7 +45,6 @@ router.post('/search', async (req, res) => {
 // Add to inventory
 router.post('/', async (req, res) => {
   try {
-    
     const inventoryCheck = await db.Inventory.findOne({
       genericName: req.body.genericName
     })
@@ -53,7 +52,7 @@ router.post('/', async (req, res) => {
     if (inventoryCheck) {
       res.json({ msg: `${req.body.genericName} already exists.` })
     } else {
-      const inventoryCreated = await db.Inventory.create(req.body)      
+      const inventoryCreated = await db.Inventory.create(req.body)
       await inventoryCreated.save()
       res.json(inventoryCreated)
     }
@@ -75,33 +74,14 @@ router.put('/:id', async(req,res)=> {
     }
 })
 
-// get transactions --use this to count total count of inventory/or to display transactions (Norman)
-router.get('/:id/transaction', async(req,res)=> {
+router.delete('/:id', async (req,res) => {
   try {
-    const foundTransactions = await db.Inventory.findById(req.params.id)
-    res.json(foundTransactions.transactions)
-  } catch (error) {
+    await db.Inventory.findByIdAndDelete(req.params.id)
+    res.status(204).send({message: "deleted."})
+  } catch (err) {
     console.log(error)
-    res.status(503).json({msg: `An error occured.`})
+    res.status(503).json({message: "something went wrong."})
   }
 })
-
-// add to transactions (Norman)
-router.put('/:id/transaction', async(req,res)=> {
-  try {    
-    const newTransaction = await db.Inventory.findById(req.params.id)
-    if(req.body.transType === 'rem') {
-      req.body.transCount *= -1 
-    }
-    newTransaction.unitCount += parseInt(req.body.transCount)    
-    newTransaction.transactions.push(req.body)
-    await newTransaction.save()    
-    res.json(newTransaction)
-  } catch (error) {
-    console.log(error)
-    res.status(503).json({msg: `An error occured.`})
-  }
-})
-
 
 module.exports = router
