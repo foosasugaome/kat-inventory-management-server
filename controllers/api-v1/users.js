@@ -72,7 +72,8 @@ router.post('/register', async (req, res) => {
             username: newUser.username,
             email: newUser.email,
             id: newUser.id,
-            manager: newUser.manager
+            manager: newUser.manager,
+            firstname: newUser.firstname
         }
 
         // sign the jwt and send it( log them in)
@@ -102,7 +103,8 @@ router.post('/login', async (req,res)=> {
                 username: foundUser.username,
                 email: foundUser.email,
                 id: foundUser.id,
-                manager: foundUser.manager
+                manager: foundUser.manager,
+                firstname: foundUser.firstname
             }
             const token = await jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: 60 * 60})
             res.json({ token })
