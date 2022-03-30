@@ -47,11 +47,11 @@ router.delete('/:id', async (req, res) => {
 //POST /users/register -- CREATE a new user
 router.post('/register', async (req, res) => {
     try {
-        // check if the user exists, dont allow to sign up again
-        const userCheck = await db.Users.findOne({
-            email: req.body.email
+        // check if the user exists, dont allow to sign up again     
+        const userCheck = await db.Users.findOne({ $or: [
+            {email: req.body.email,},{username : req.body.username }]
         })
-        if(userCheck) return res.status(409).json({ msg: 'Email already in use.'})
+        if(userCheck) return res.status(409).json({ msg: 'Email/Username already in use.'})
 
         // hash the pass
         const salt = 12
