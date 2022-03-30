@@ -8,32 +8,32 @@ const { route } = require('./users')
 // const requiresToken = require('../requiresToken')
 
 // List all inventory
-router.get('/', async (req,res)=>{
-    try {
-        const listInventory = await db.Inventory.find({})
-        res.json(listInventory)
-    } catch (error) {
-        console.log(error)
-    }
-} )
+router.get('/', async (req, res) => {
+  try {
+    const listInventory = await db.Inventory.find({})
+    res.json(listInventory)
+  } catch (error) {
+    console.log(error)
+  }
+})
 //route to get one specific medicine (justin)
-router.get('/:id', async (req,res)=>{
-    try {
-        const foundMedicine = await db.Inventory.findById(req.params.id)
-        res.json(foundMedicine)
-    } catch (error) {
-        console.log(error)
-    }
-} )
-
-
-
+router.get('/:id', async (req, res) => {
+  try {
+    const foundMedicine = await db.Inventory.findById(req.params.id)
+    res.json(foundMedicine)
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 // Search inventory
 router.post('/search', async (req, res) => {
   try {
     const foundInventory = await db.Inventory.find({
-      genericName: req.body.genericName
+      $or: [
+        { genericName: { $regex: req.body.genericName, $options: 'i' } },
+        { brandName: { $regex: req.body.genericName, $options: 'i' } }
+      ]
     })
 
     res.json(foundInventory)
@@ -65,41 +65,51 @@ router.post('/', async (req, res) => {
 })
 
 // update inventory
-router.put('/:id', async(req,res)=> {
-    try {
-        const inventoryUpdated = await db.Inventory.findByIdAndUpdate(req.params.id, req.body,{new:true})
-        res.json(inventoryUpdated)
-    } catch (error) {
-        console.log(error)        
-    }
-})
-
-router.delete('/:id', async (req,res) => {
+router.put('/:id', async (req, res) => {
   try {
-    await db.Inventory.findByIdAndDelete(req.params.id)
-    res.status(204).send({message: "deleted."})
-  } catch (err) {
+    const inventoryUpdated = await db.Inventory.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    )
+    res.json(inventoryUpdated)
+  } catch (error) {
     console.log(error)
-    res.status(503).json({message: "something went wrong."})
   }
 })
 
+<<<<<<< HEAD
+=======
+router.delete('/:id', async (req, res) => {
+  try {
+    await db.Inventory.findByIdAndDelete(req.params.id)
+    res.status(204).send({ message: 'deleted.' })
+  } catch (err) {
+    console.log(error)
+    res.status(503).json({ message: 'something went wrong.' })
+  }
+})
+
+>>>>>>> 555f6a6eed13c344ef7dfa224a41e158217cd0b5
 // add to transactions (Norman)
-router.put('/:id/transaction', async(req,res)=> {
-  try {    
+router.put('/:id/transaction', async (req, res) => {
+  try {
     const newTransaction = await db.Inventory.findById(req.params.id)
-    if(req.body.transType === 'S' || req.body.transType === 'R') {
-      req.body.transCount *= -1 
+    if (req.body.transType === 'S' || req.body.transType === 'R') {
+      req.body.transCount *= -1
     }
-    newTransaction.unitCount += parseInt(req.body.transCount)    
+    newTransaction.unitCount += parseInt(req.body.transCount)
     newTransaction.transactions.push(req.body)
-    await newTransaction.save()    
+    await newTransaction.save()
     res.json(newTransaction)
   } catch (error) {
     console.log(error)
-    res.status(503).json({msg: `An error occured.`})
+    res.status(503).json({ msg: `An error occured.` })
   }
 })
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 555f6a6eed13c344ef7dfa224a41e158217cd0b5
 module.exports = router
