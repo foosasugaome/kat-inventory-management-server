@@ -45,6 +45,7 @@ router.post('/search', async (req, res) => {
 // Add to inventory
 router.post('/', async (req, res) => {
   try {
+    
     const inventoryCheck = await db.Inventory.findOne({
       genericName: req.body.genericName
     })
@@ -52,7 +53,7 @@ router.post('/', async (req, res) => {
     if (inventoryCheck) {
       res.json({ msg: `${req.body.genericName} already exists.` })
     } else {
-      const inventoryCreated = await db.Inventory.create(req.body)
+      const inventoryCreated = await db.Inventory.create(req.body)      
       await inventoryCreated.save()
       res.json(inventoryCreated)
     }
