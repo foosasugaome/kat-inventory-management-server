@@ -78,8 +78,6 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-<<<<<<< HEAD
-=======
 router.delete('/:id', async (req, res) => {
   try {
     await db.Inventory.findByIdAndDelete(req.params.id)
@@ -90,7 +88,6 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
->>>>>>> 555f6a6eed13c344ef7dfa224a41e158217cd0b5
 // add to transactions (Norman)
 router.put('/:id/transaction', async (req, res) => {
   try {
@@ -108,8 +105,4 @@ router.put('/:id/transaction', async (req, res) => {
   }
 })
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 555f6a6eed13c344ef7dfa224a41e158217cd0b5
 module.exports = router
