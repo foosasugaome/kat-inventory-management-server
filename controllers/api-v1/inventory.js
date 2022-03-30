@@ -77,7 +77,6 @@ router.put('/:id', async (req, res) => {
     console.log(error)
   }
 })
-
 router.delete('/:id', async (req, res) => {
   try {
     await db.Inventory.findByIdAndDelete(req.params.id)
@@ -85,6 +84,17 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     console.log(error)
     res.status(503).json({ message: 'something went wrong.' })
+  }
+})
+
+// get transactions by inventory._id (Norman)
+router.get('/:id/transaction', async(req,res)=> {
+  try {
+    const foundTransactions = await db.Inventory.findById(req.params.id)
+    res.json(foundTransactions.transactions)
+  } catch (error) {
+    console.log(error)
+    res.status(503).json({msg: `An error occured.`})
   }
 })
 
