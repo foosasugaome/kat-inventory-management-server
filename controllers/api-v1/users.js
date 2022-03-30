@@ -8,7 +8,6 @@ const requiresToken = require('../requiresToken')
 
 
 // GET users 
-
 router.get('/', async (req,res)=> {
     try {
         const foundUser = await db.Users.find({})
@@ -19,6 +18,7 @@ router.get('/', async (req,res)=> {
     }
 })
 
+// PUT user
 router.put('/:id', async(req,res)=> {
     try {
         console.log(req.body)
@@ -26,10 +26,21 @@ router.put('/:id', async(req,res)=> {
         const users = await db.Users.find({})
         // res.json(updateUser)
         res.json(users)
-    } catch (error) {
+    } catch (err) {
         console.log(err)
         res.send(503).json({msg: 'Server error : 503'})
-        
+    }
+})
+
+// DELETE user
+router.delete('/:id', async (req, res) => { 
+    try {
+        console.log("req params", req.params.id)
+        const foundUser = await db.Users.findByIdAndDelete(req.params.id)
+        res.status(204).json({ msg: 'User Deleted' })
+    } catch (err) {
+        console.log (err)
+        res.send(503).json({ msg: 'Service error : 503'})
     }
 })
 
