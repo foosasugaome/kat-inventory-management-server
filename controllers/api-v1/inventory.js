@@ -104,7 +104,7 @@ router.put('/:id/transaction', async (req, res) => {
     const newTransaction = await db.Inventory.findById(req.params.id)
     if (req.body.transType === 'S' || req.body.transType === 'R') {
       req.body.transCount *= -1
-    }
+    }    
     newTransaction.unitCount += parseInt(req.body.transCount)
     newTransaction.transactions.push(req.body)
     await newTransaction.save()

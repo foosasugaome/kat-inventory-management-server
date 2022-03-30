@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 const transactionsSchema = new mongoose.Schema({
     transType : String,
-    transCount : Number,    
+    transCount : Number,   
+    transPPU : Number, 
     transNotes : String,
     transOwner : String,
     transUpdatedBy : String
