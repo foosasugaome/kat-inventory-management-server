@@ -2,7 +2,6 @@
 
 ## Deployed Link
 
-___
 ## About
 Inventory management software for pharmacies, utilizing the FDA open drug API. Pharmacies can monitor the current inventory to help make decisions on placing additional orders to minimize over / under stocking and ultimately
 lower costs.
