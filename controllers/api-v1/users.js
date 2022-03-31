@@ -22,10 +22,12 @@ router.get('/', async (req,res)=> {
 router.put('/:id', async(req,res)=> {
     try {
         
-        const salt = 12
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
-        req.body.password = hashedPassword
-        console.log(req.body)
+        if(req.body.password){
+            const salt = 12
+            const hashedPassword = await bcrypt.hash(req.body.password, salt)
+            req.body.password = hashedPassword
+            console.log(req.body)
+        }        
 
         const updateUser = await db.Users.findByIdAndUpdate(req.params.id,req.body,{new: true})
         const users = await db.Users.find({})
