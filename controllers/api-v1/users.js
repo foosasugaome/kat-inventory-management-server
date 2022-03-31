@@ -21,7 +21,12 @@ router.get('/', async (req,res)=> {
 // PUT user
 router.put('/:id', async(req,res)=> {
     try {
+        
+        const salt = 12
+        const hashedPassword = await bcrypt.hash(req.body.password, salt)
+        req.body.password = hashedPassword
         console.log(req.body)
+
         const updateUser = await db.Users.findByIdAndUpdate(req.params.id,req.body,{new: true})
         const users = await db.Users.find({})
         // res.json(updateUser)
@@ -73,7 +78,9 @@ router.post('/register', async (req, res) => {
             email: newUser.email,
             id: newUser.id,
             manager: newUser.manager,
-            firstname: newUser.firstname
+            firstname: newUser.firstname,
+            lastname: newUser.lastname
+
         }
 
         // sign the jwt and send it( log them in)
@@ -104,7 +111,8 @@ router.post('/login', async (req,res)=> {
                 email: foundUser.email,
                 id: foundUser.id,
                 manager: foundUser.manager,
-                firstname: foundUser.firstname
+                firstname: foundUser.firstname,
+                lastname:foundUser.lastname
             }
             const token = await jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: 60 * 60})
             res.json({ token })
